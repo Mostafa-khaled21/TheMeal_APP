@@ -7,12 +7,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Data.UI.MainActivity">
-
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView"
-        android:name="com.example.themeal_app.Data.UI.HomeFragment"
+    <Button
+        android:id="@+id/btn"
         android:layout_width="match_parent"
-        android:layout_gravity="center"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:text="btn"/>
+
+
 </LinearLayout>

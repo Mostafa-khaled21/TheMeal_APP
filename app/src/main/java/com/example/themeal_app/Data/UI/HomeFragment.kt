@@ -4,9 +4,11 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.themeal_app.Data.MVVM.MVVM
@@ -15,6 +17,7 @@ import com.example.viewmodel.network.ApiClient
 import com.example.viewmodel.products.Repo.ProductRepositoryImplementation
 import com.example.viewmodel.products.adapter.adapter
 import com.example.viewmodel.products.viewModel.ViewModelFactory
+import com.google.android.material.navigation.NavigationView
 
 
 class HomeFragment : Fragment() {
@@ -33,6 +36,7 @@ class HomeFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         recycel = view.findViewById(R.id.recycleview)
+
         recycel.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
          getViewModel()
         //ViewModel = ViewModelProvider(this, ViewModelFactory(ProductRepositoryImplementation(ApiClient))).get(MVVM::class.java)
@@ -56,5 +60,6 @@ class HomeFragment : Fragment() {
         )
         ViewModel = ViewModelProvider(this,ViewModelFactory).get(MVVM::class.java)
     }
+
 
 }

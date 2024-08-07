@@ -2,4 +2,10 @@
     <string name="app_name">TheMeal_APP</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="str_home">home</string>
+    <string name="str_fav">favorite</string>
+    <string name="str_cat">category</string>
+    <string name="nav_drawer_start">start</string>
+    <string name="nav_drawer_close">close</string>
+
 </resources>
