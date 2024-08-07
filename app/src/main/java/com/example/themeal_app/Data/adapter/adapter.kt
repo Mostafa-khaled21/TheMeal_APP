@@ -11,13 +11,18 @@ import android.widget.TextView
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.themeal_app.DatabaseModel.model.Meal
 import com.example.themeal_app.R
-import com.example.themeal_app.model.allData
+import com.example.themeal_app.DatabaseModel.model.allData
 
-class adapter(private val context: Context) : RecyclerView.Adapter<adapter.MyViewHolder>() {
-   lateinit var  data:allData
+class adapter(
+    private val context: Context,
+    private val onItemClick: (Meal) -> Unit
+) : RecyclerView.Adapter<adapter.MyViewHolder>() {
 
-    fun setCategoryList(categoryList: allData){
+    lateinit var data: allData
+
+    fun setCategoryList(categoryList: allData) {
         this.data = categoryList
         notifyDataSetChanged()
     }
@@ -45,5 +50,16 @@ class adapter(private val context: Context) : RecyclerView.Adapter<adapter.MyVie
             .load(category.strCategoryThumb)
             .centerCrop()
             .into(holder.img)
+
+        holder.itemView.setOnClickListener {
+            // Create a FavoriteRecipe object
+            val favoriteRecipe = Meal(
+                idMeal = category.idCategory, // Adjust this if needed
+                strMeal = category.strCategory,
+                strMealThumb = category.strCategoryThumb
+            )
+            // Call the onItemClick function
+            onItemClick(favoriteRecipe)
+        }
     }
 }

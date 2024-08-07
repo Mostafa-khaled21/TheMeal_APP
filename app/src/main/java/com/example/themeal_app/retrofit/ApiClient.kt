@@ -3,7 +3,7 @@ package com.example.viewmodel.network
 import FoodApi
 import MealDetail
 import com.example.easyfood.data.retrofit.RetrofitClient
-import com.example.themeal_app.model.allData
+import com.example.themeal_app.DatabaseModel.model.allData
 import retrofit2.Call
 import retrofit2.Response
 
