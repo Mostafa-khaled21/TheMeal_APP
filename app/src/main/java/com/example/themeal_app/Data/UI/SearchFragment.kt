@@ -46,7 +46,7 @@ class SearchFragment : Fragment() {
         btn_search.setOnClickListener {
             Log.d("TAG1", "onCreateView: ")
             val query = ed_search.text.toString()
-                viewModel.getMealByName(query)
+            viewModel.getMealByName(query)
 
             Log.d("TAG1", "onCreateView: 1")
             viewModel.categoryResponse.observe(viewLifecycleOwner) { searchResponse ->
