@@ -52,8 +52,11 @@ dependencies {
 
     //retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
+
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
+
+
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
 
 

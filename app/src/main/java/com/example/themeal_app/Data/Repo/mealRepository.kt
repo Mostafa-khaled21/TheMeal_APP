@@ -11,5 +11,4 @@ interface mealRepository {
     suspend fun   getMealByName(@Query("s") s:String):Response<allData>
     suspend  fun getRandomMeal():Response<allData>
     suspend fun getMealById(@Query("i") id:String):Response<allData>
-
 }
