@@ -44,22 +44,24 @@ class SearchFragment : Fragment() {
 
         getViewModel()
         btn_search.setOnClickListener {
-            Log.d("TAG1", "onCreateView: ")
             val query = ed_search.text.toString()
-            viewModel.getMealByName(query)
 
-            Log.d("TAG1", "onCreateView: 1")
-            viewModel.categoryResponse.observe(viewLifecycleOwner) { searchResponse ->
-                Log.d("TAG1", "onCreateView:2 ")
+            if (query.isNotEmpty()) {
+                viewModel.getMealByName(query)
+                viewModel.categoryResponse.observe(viewLifecycleOwner) { searchResponse ->
 
-                if (searchResponse != null) {
-                    adapter = searchAdapter(requireContext())
-                    adapter.submitData(searchResponse)
-                    Log.d("TAG1", "onCreateView:${searchResponse.meals} ")
-                    recycel.adapter = adapter
-                    adapter.notifyDataSetChanged()
+                    if (searchResponse != null) {
+                        adapter = searchAdapter(requireContext())
+                        adapter.submitData(searchResponse)
+                        Log.d("TAG1", "onCreateView:${searchResponse.meals} ")
+                        recycel.adapter = adapter
+                        adapter.notifyDataSetChanged()
+                    }
                 }
+            } else {
+                Toast.makeText(requireContext(), "Please enter a meal name", Toast.LENGTH_LONG).show()
             }
+
 
         }
 
