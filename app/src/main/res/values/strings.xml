@@ -7,5 +7,11 @@
     <string name="str_cat">category</string>
     <string name="nav_drawer_start">start</string>
     <string name="nav_drawer_close">close</string>
+    <string name="sandwich_symbol_desc">MealFood</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="login">Login</string>
+    <string name="back_button_desc">back</string>
+    <string name="sign_in_button"> Sign in</string>
+
 
 </resources>
