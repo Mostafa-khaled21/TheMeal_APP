@@ -38,6 +38,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.fragment)
     val nav_version = "2.7.7"
     val lifecycle_version = "2.8.4"
 
