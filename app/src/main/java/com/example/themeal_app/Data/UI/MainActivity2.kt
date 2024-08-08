@@ -19,97 +19,93 @@ class MainActivity2 : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
     private lateinit var drawer: DrawerLayout
     private lateinit var bottomNavView: BottomNavigationView
     private lateinit var navController: NavController
+            @SuppressLint("MissingInflatedId")
+            override fun onCreate(savedInstanceState: Bundle?) {
+                super.onCreate(savedInstanceState)
+                setContentView(R.layout.activity_main2) // Make sure this is the correct layout
 
+                navView = findViewById(R.id.nav_view)
+                navView.setNavigationItemSelectedListener(this)
+                adjustForKeyboard()
 
-    @SuppressLint("MissingInflatedId")
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main2)
+                val navHostFragment =
+                    supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+                navController = navHostFragment.navController
 
-        navView = findViewById(R.id.nav_view)
-        drawer = findViewById(R.id.drawer)
-        bottomNavView = findViewById(R.id.bottom_navigation)
+                bottomNavView = findViewById(R.id.bottom_navigation)
+                bottomNavView.setOnItemSelectedListener { item ->
+                    when (item.itemId) {
+                        R.id.homeFragmentbottom -> {
+                            navController.navigate(R.id.homeFragment)
+                            true
+                        }
 
-        // Setup Navigation View
-        navView.setNavigationItemSelectedListener(this)
+                        R.id.favoriteFragmentbottom -> {
+                            navController.navigate(R.id.favoriteFragment)
+                            true
+                        }
 
-        // Setup Bottom Navigation View
-        bottomNavView.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.homeFragmentbottom -> {
-                    navController.navigate(R.id.homeFragment)
-                    true
+                        R.id.searchFragmentbottom -> {
+                            navController.navigate(R.id.searchFragment)
+                            true
+                        }
+
+                        else -> false
+                    }
                 }
-                R.id.favoriteFragmentbottom -> {
-                    navController.navigate(R.id.favoriteFragment)
-                    true
+
+                drawer = findViewById(R.id.drawer)
+                val toggle = ActionBarDrawerToggle(
+                    this, drawer, R.string.nav_drawer_start,
+                    R.string.nav_drawer_close
+                )
+                drawer.addDrawerListener(toggle)
+                toggle.syncState()
+            }
+
+            override fun onNavigationItemSelected(item: MenuItem): Boolean {
+                when (item.itemId) {
+                    R.id.action_home -> {
+                        navController.navigate(R.id.homeFragment)
+                        bottomNavView.selectedItemId = R.id.homeFragmentbottom
+                        drawer.closeDrawers()
+                        return true
+                    }
+
+                    R.id.action_fav -> {
+                        navController.navigate(R.id.favoriteFragment)
+                        bottomNavView.selectedItemId = R.id.favoriteFragmentbottom
+                        drawer.closeDrawers()
+                        return true
+                    }
+
+                    R.id.action_search -> {
+                        navController.navigate(R.id.searchFragment)
+                        bottomNavView.selectedItemId = R.id.searchFragmentbottom
+                        drawer.closeDrawers()
+                        return true
+                    }
                 }
-                R.id.searchFragmentbottom -> {
-                    navController.navigate(R.id.searchFragment)
-                    true
+                drawer.closeDrawers()
+                return false
+            }
+
+            private fun adjustForKeyboard() {
+                val rootView = window.decorView.findViewById<View>(android.R.id.content)
+
+                rootView.viewTreeObserver.addOnGlobalLayoutListener {
+                    val rect = Rect()
+                    rootView.getWindowVisibleDisplayFrame(rect)
+                    val screenHeight = rootView.height
+                    val keypadHeight = screenHeight - rect.bottom
+
+                    if (keypadHeight > screenHeight * 0.15) {
+                        // Keyboard is visible
+                        bottomNavView.translationY = keypadHeight.toFloat()
+                    } else {
+                        // Keyboard is hidden
+                        bottomNavView.translationY = 0f
+                    }
                 }
-                else -> false
             }
         }
-
-        // Setup Drawer Toggle
-        val toggle = ActionBarDrawerToggle(
-            this, drawer, R.string.nav_drawer_start, R.string.nav_drawer_close
-        )
-        drawer.addDrawerListener(toggle)
-        toggle.syncState()
-
-        // Initialize NavController
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment_main2) as NavHostFragment
-        navController = navHostFragment.navController
-
-        // Adjust for keyboard
-        adjustForKeyboard()
-    }
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_home -> {
-                navController.navigate(R.id.homeFragment)
-                bottomNavView.selectedItemId = R.id.homeFragmentbottom
-                drawer.closeDrawers()
-                return true
-            }
-
-            R.id.action_fav -> {
-                navController.navigate(R.id.favoriteFragment)
-                bottomNavView.selectedItemId = R.id.favoriteFragmentbottom
-                drawer.closeDrawers()
-                return true
-            }
-
-            R.id.action_search -> {
-                navController.navigate(R.id.searchFragment)
-                bottomNavView.selectedItemId = R.id.searchFragmentbottom
-                drawer.closeDrawers()
-                return true
-            }
-        }
-        drawer.closeDrawers()
-        return false
-    }
-    private fun adjustForKeyboard() {
-        val rootView = window.decorView.findViewById<View>(android.R.id.content)
-
-        rootView.viewTreeObserver.addOnGlobalLayoutListener {
-            val rect = Rect()
-            rootView.getWindowVisibleDisplayFrame(rect)
-            val screenHeight = rootView.height
-            val keypadHeight = screenHeight - rect.bottom
-
-            if (keypadHeight > screenHeight * 0.15) {
-                // Keyboard is visible
-                bottomNavView.translationY = keypadHeight.toFloat()
-            } else {
-                // Keyboard is hidden
-                bottomNavView.translationY = 0f
-            }
-        }
-    }
-}

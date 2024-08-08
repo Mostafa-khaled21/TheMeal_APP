@@ -25,7 +25,7 @@ class SplashFragment : Fragment() {
 
         Handler(Looper.getMainLooper()).postDelayed({
             // Replace `MainFragment` with your target fragment
-            findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
+            findNavController().navigate(R.id.action_splashFragment2_to_loginFragment3)
 
 
         }, 2000) // Delay in milliseconds (e.g., 2000 ms = 2 seconds)

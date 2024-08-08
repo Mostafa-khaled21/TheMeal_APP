@@ -1,6 +1,7 @@
 package com.example.themeal_app.Data.UI
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -59,8 +60,9 @@ class LoginFragment : Fragment() {
                 userViewModel.loginUser(name, pass)
                 userViewModel.loginStatus.observe(viewLifecycleOwner) { isSuccess ->
                     if (isSuccess) {
-                        findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
-                    } else {
+                        val intent = Intent(requireContext(), MainActivity2::class.java)
+                        startActivity(intent)
+                        requireActivity().finish()                     } else {
                         Toast.makeText(requireContext(), "Name or password is incorrect", Toast.LENGTH_LONG).show()
                     }
                 }
@@ -69,7 +71,7 @@ class LoginFragment : Fragment() {
             }
         }
         txt_signup.setOnClickListener{
-            findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
+            findNavController().navigate(R.id.action_loginFragment3_to_signUpFragment2)
 
         }
 

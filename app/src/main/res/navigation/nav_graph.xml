@@ -2,24 +2,29 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/splashFragment">
-
+    app:startDestination="@id/splashFragment2">
     <fragment
-        android:id="@+id/splashFragment"
+        android:id="@+id/splashFragment2"
         android:name="com.example.themeal_app.Data.UI.SplashFragment"
-        android:label="SplashFragment">
+        android:label="SplashFragment" >
         <action
-            android:id="@+id/action_splashFragment_to_nextFragment"
-            app:destination="@id/nextFragment" />
+            android:id="@+id/action_splashFragment2_to_loginFragment3"
+            app:destination="@id/loginFragment3" />
     </fragment>
-
     <fragment
-        android:id="@+id/nextFragment"
+        android:id="@+id/signUpFragment2"
+        android:name="com.example.themeal_app.Data.UI.SignUpFragment"
+        android:label="SignUpFragment" >
+        <action
+            android:id="@+id/action_signUpFragment2_to_loginFragment3"
+            app:destination="@id/loginFragment3" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment3"
         android:name="com.example.themeal_app.Data.UI.LoginFragment"
-        android:label="NextFragment" />
-    <activity
-        android:id="@+id/mainActivity"
-        android:name="com.example.themeal_app.Data.UI.MainActivity"
-        android:label="login_fragment"
-        tools:layout="@layout/login_fragment" />
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment3_to_signUpFragment2"
+            app:destination="@id/signUpFragment2" />
+    </fragment>
 </navigation>

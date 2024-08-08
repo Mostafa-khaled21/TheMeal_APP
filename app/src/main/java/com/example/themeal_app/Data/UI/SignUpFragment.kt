@@ -75,7 +75,7 @@ class SignUpFragment : Fragment() {
 
         }
         txt_signin.setOnClickListener{
-            findNavController().navigate(R.id.action_signUpFragment_to_loginFragment)
+            findNavController().navigate(R.id.action_signUpFragment2_to_loginFragment3)
 
         }
 
