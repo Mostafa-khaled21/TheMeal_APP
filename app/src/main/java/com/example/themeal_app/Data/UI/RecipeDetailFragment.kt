@@ -12,6 +12,8 @@ import com.example.themeal_app.R
 
 class RecipeDetailFragment : Fragment() {
     private var isTextExpanded = false
+   /* private var isExpanded = false
+    private val maxLines=2*/
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,6 +24,9 @@ class RecipeDetailFragment : Fragment() {
         val descriptionTextView = view.findViewById<TextView>(R.id.descr)
         val toggleTextView = view.findViewById<TextView>(R.id.toggleTextView)
         val favoriteButton = view.findViewById<Button>(R.id.favoriteButton)
+
+     /*   descriptionTextView.maxLines = maxLines
+        toggleTextView.ellipsize = TextUtils.TruncateAt.END*/
 
         toggleTextView.setOnClickListener {
             if (isTextExpanded) {
