@@ -79,7 +79,6 @@ class HomeFragment : Fragment() {
         val apiViewModelFactory = ViewModelFactory(ProductRepositoryImplementation(ApiClient))
         viewModel = ViewModelProvider(this, apiViewModelFactory).get(MVVM::class.java)
 
-
         val favoriteRecipeDao = FavoriteDatabase.getDatabase(requireContext()).favoriteRecipeDao()
         val favoriteRecipeRepository = FavoriteRecipeRepositoryImplementation(favoriteRecipeDao)
         val favoriteRecipeViewModelFactory = FavoriteRecipeViewModelFactory(favoriteRecipeRepository)

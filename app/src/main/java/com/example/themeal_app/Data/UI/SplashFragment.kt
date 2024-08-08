@@ -1,13 +1,14 @@
 package com.example.themeal_app.Data.UI
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
+import androidx.navigation.fragment.findNavController
 import com.example.themeal_app.R
-import com.example.themeal_app.utils.SharedPreferencesManager
 
 class SplashFragment : Fragment() {
 
@@ -22,19 +23,12 @@ class SplashFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        view.postDelayed({
+        Handler(Looper.getMainLooper()).postDelayed({
+            // Replace `MainFragment` with your target fragment
+            findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
 
-            if (SharedPreferencesManager.isLoggedIn(requireContext())) {
 
-                parentFragmentManager.commit {
-                    replace(R.id.splashscreen, HomeFragment())
-                }
-            } else {
+        }, 2000) // Delay in milliseconds (e.g., 2000 ms = 2 seconds)
 
-                parentFragmentManager.commit {
-                    replace(R.id.splashscreen, LoginFragment())
-                }
-            }
-        }, 2000)
     }
 }

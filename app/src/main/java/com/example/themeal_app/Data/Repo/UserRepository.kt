@@ -7,4 +7,5 @@ interface UserRepository {
     fun registerUser(user: User)
     fun getUserByUsername(username: String): LiveData<User>
     fun getAllUsers(): LiveData<List<User>>
+    fun getUserByCredentials(username: String, password: String): LiveData<User>
 }

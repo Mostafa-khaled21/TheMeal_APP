@@ -20,4 +20,8 @@ class UserRepositoryImplementation(private val userDao: UserDao) : UserRepositor
     override fun getAllUsers(): LiveData<List<User>> {
         return userDao.getAllUsers()
     }
+
+    override fun getUserByCredentials(username: String, password: String): LiveData<User> {
+        return userDao.getUserByCredentials(username, password)
+    }
 }
