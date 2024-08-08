@@ -1,9 +1,11 @@
 package com.example.themeal_app.Data.UI
 
 import android.annotation.SuppressLint
+import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -30,7 +32,7 @@ class MainActivity2 : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main2)
         navView = findViewById(R.id.nav_view)
         navView.setNavigationItemSelectedListener(this)
-
+        adjustForKeyboard()
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
@@ -93,5 +95,23 @@ class MainActivity2 : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         }
         drawer.closeDrawers()
         return false
+    }
+    private fun adjustForKeyboard() {
+        val rootView = window.decorView.findViewById<View>(android.R.id.content)
+
+        rootView.viewTreeObserver.addOnGlobalLayoutListener {
+            val rect = Rect()
+            rootView.getWindowVisibleDisplayFrame(rect)
+            val screenHeight = rootView.height
+            val keypadHeight = screenHeight - rect.bottom
+
+            if (keypadHeight > screenHeight * 0.15) {
+                // Keyboard is visible
+                bottomNavView.translationY = keypadHeight.toFloat()
+            } else {
+                // Keyboard is hidden
+                bottomNavView.translationY = 0f
+            }
+        }
     }
 }
