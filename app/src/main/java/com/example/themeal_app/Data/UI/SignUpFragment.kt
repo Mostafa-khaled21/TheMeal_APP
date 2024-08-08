@@ -17,6 +17,7 @@ import com.example.themeal_app.Data.Repo.UserRepositoryImplementation
 import com.example.themeal_app.DatabaseModel.AllDatabase.Database.AppDatabase
 import com.example.themeal_app.DatabaseModel.AllDatabase.Entity.User
 import com.example.themeal_app.R
+import com.example.themeal_app.utils.SharedPreferencesManager
 
 class SignUpFragment : Fragment() {
     lateinit var ed_name : EditText
@@ -62,6 +63,8 @@ class SignUpFragment : Fragment() {
                             val user = User(username, password)
                             userViewModel.registerUser(user)
                             Toast.makeText(requireContext(), "Registration successful", Toast.LENGTH_LONG).show()
+
+                            SharedPreferencesManager.setLoggedIn(requireContext(), true)
                         }
                     }
                 } else {

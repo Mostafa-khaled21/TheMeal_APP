@@ -60,6 +60,8 @@ class LoginFragment : Fragment() {
                 userViewModel.loginUser(name, pass)
                 userViewModel.loginStatus.observe(viewLifecycleOwner) { isSuccess ->
                     if (isSuccess) {
+                        SharedPreferencesManager.setLoggedIn(requireContext(), true)
+
                         val intent = Intent(requireContext(), MainActivity2::class.java)
                         startActivity(intent)
                         requireActivity().finish()                     } else {

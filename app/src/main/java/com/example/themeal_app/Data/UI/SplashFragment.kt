@@ -7,8 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.themeal_app.R
+import com.example.themeal_app.utils.SharedPreferencesManager
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class SplashFragment : Fragment() {
 
@@ -22,13 +26,18 @@ class SplashFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         Handler(Looper.getMainLooper()).postDelayed({
-            // Replace `MainFragment` with your target fragment
-            findNavController().navigate(R.id.action_splashFragment2_to_loginFragment3)
+            if (SharedPreferencesManager.isLoggedIn(requireContext())) {
+                findNavController().navigate(R.id.action_splashFragment2_to_homeFragment)
+            } else {
+                findNavController().navigate(R.id.action_splashFragment2_to_loginFragment3)
+            }
+        }, 2000)
 
-
-        }, 2000) // Delay in milliseconds (e.g., 2000 ms = 2 seconds)
 
     }
+
+
+
 }
+
