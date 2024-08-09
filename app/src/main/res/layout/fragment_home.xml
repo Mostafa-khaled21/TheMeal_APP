@@ -1,26 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Data.UI.HomeFragment">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycleview"
+    tools:context=".Data.UI.HomeFragment"
+    >
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/card"
+        android:orientation="vertical">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/imagerecycleview"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:contentDescription="@string/str_fav"
+            tools:listitem="@layout/designhomescroll"/>
 
-        />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/card"
+            />
 
-    <TextView
-        android:id="@+id/favorite_recipes_text_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:textSize="18sp"
-        android:padding="16dp"
-        android:gravity="center" />
+    </LinearLayout>
+</LinearLayout>
 
-</FrameLayout>
+</androidx.core.widget.NestedScrollView>
