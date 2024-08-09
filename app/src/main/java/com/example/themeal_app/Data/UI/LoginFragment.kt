@@ -53,14 +53,18 @@ class LoginFragment : Fragment() {
         btn_login.setOnClickListener{
             var name= ed_name.text.toString().trim()
             var pass= ed_pass.text.toString().trim()
-
             val editor = sharedPreferences.edit()
+
             if (name.isNotEmpty() && pass.isNotEmpty()) {
                 // Observe login status
                 userViewModel.loginUser(name, pass)
                 userViewModel.loginStatus.observe(viewLifecycleOwner) { isSuccess ->
                     if (isSuccess) {
                         SharedPreferencesManager.setLoggedIn(requireContext(), true)
+
+                        editor.putString("user_name", name)  // Save the user name
+                        editor.apply()
+
 
                         val intent = Intent(requireContext(), MainActivity2::class.java)
                         startActivity(intent)
