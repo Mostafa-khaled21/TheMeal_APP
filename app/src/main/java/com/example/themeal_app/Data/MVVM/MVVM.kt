@@ -13,6 +13,7 @@ class MVVM(private val mealRepository: mealRepository) : ViewModel() {
     private val _categoryResponse = MutableLiveData<allData>()
     val categoryResponse: LiveData<allData> = _categoryResponse
 
+
     fun getAllCategories() {
         viewModelScope.launch {
             val result = mealRepository.getCategoryResponse()
