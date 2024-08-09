@@ -6,4 +6,5 @@
     </style>
 
     <style name="Theme.TheMeal_APP" parent="Base.Theme.TheMeal_APP" />
+
 </resources>

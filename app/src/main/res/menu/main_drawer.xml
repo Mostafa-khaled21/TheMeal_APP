@@ -6,14 +6,16 @@
             android:id="@+id/action_home"
             android:icon="@drawable/baseline_home_24"
             android:title="@string/str_home" />
+
+        <item
+            android:id="@+id/action_search"
+            android:title="Search"
+            android:icon="@drawable/baseline_search_24"
+            />
         <item
             android:id="@+id/action_fav"
             android:icon="@drawable/baseline_favorite_24"
-
             android:title="@string/str_fav" />
-        <item
-            android:id="@+id/action_category"
-            android:icon="@drawable/baseline_category_24"
-            android:title="@string/str_cat" />
+
     </group>
 </menu>

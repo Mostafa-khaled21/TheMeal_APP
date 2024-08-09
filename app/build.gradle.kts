@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("androidx.navigation.safeargs.kotlin")
-
+    id("kotlin-kapt")
 }
 
 android {
@@ -51,10 +51,10 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     //retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
 
 
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
@@ -63,6 +63,11 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
     implementation("androidx.lifecycle:lifecycle-extensions:2.1.0")
 
+    val room_version = "2.5.1"
+    implementation ("androidx.room:room-runtime:$room_version")
+    implementation ("androidx.room:room-ktx:$room_version")
+    testImplementation ("androidx.room:room-testing:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
 
 
 }

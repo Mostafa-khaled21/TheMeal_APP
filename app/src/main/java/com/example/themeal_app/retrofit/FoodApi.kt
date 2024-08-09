@@ -1,4 +1,4 @@
-import com.example.themeal_app.model.allData
+import com.example.themeal_app.DatabaseModel.model.allData
 import retrofit2.Call
 
 

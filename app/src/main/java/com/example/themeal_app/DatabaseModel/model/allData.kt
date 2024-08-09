@@ -1,7 +1,6 @@
-package com.example.themeal_app.model
+package com.example.themeal_app.DatabaseModel.model
 
 import Category
-import Meal
 import MealDetail
 
 data class allData(

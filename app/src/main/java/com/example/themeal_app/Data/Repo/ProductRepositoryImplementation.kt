@@ -1,6 +1,6 @@
 package com.example.viewmodel.products.Repo
 
-import com.example.themeal_app.model.allData
+import com.example.themeal_app.DatabaseModel.model.allData
 import com.example.viewmodel.network.RemoteDataSource
 import retrofit2.Call
 import retrofit2.Response
