@@ -13,11 +13,11 @@
             android:id="@+id/action_homeFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_favoriteFragment"
-            app:destination="@id/favoriteFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_mealsFragment"
             app:destination="@id/mealsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_favoriteFragment"
+            app:destination="@id/favoriteFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -32,13 +32,28 @@
             app:destination="@id/favoriteFragment" />
     </fragment>
     <fragment
+        android:id="@+id/mealsFragment"
+        android:name="com.example.themeal_app.Data.UI.mealsFragment"
+        android:label="fragment_meals"
+        tools:layout="@layout/fragment_meals" >
+        <argument
+            android:name="category"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_mealsFragment_to_recipeDetailFragment"
+            app:destination="@id/recipeDetailFragment" />
+    </fragment>
+    <fragment
         android:id="@+id/recipeDetailFragment"
-        android:name="com.example.themeal_app.Data.UI.RecipeDetailFragment"
-        android:label="fragment_recipe_detail"
-        tools:layout="@layout/fragment_recipe_detail" />
+        android:name="com.example.themeal_app.UI.Fragments.RecipeDetailFragment"
+        android:label="RecipeDetailFragment" >
+        <argument
+            android:name="position"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
-        android:name="com.example.themeal_app.Data.UI.FavoriteFragment"
+        android:name="com.example.themeal_app.UI.Fragments.FavoriteFragment"
         android:label="FavoriteFragment" >
         <action
             android:id="@+id/action_favoriteFragment_to_searchFragment"
@@ -46,17 +61,5 @@
         <action
             android:id="@+id/action_favoriteFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/mealsFragment"
-        android:name="com.example.themeal_app.Data.UI.mealsFragment"
-        android:label="fragment_meals"
-        tools:layout="@layout/fragment_meals" >
-        <action
-            android:id="@+id/action_mealsFragment_to_recipeDetailFragment"
-            app:destination="@id/recipeDetailFragment" />
-        <argument
-            android:name="category"
-            app:argType="string" />
     </fragment>
 </navigation>
