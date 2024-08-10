@@ -42,12 +42,14 @@
                     android:layout_marginTop="203dp"
                     android:layout_marginBottom="10dp"
                     android:orientation="vertical">
+
                     <TextView
                         android:id="@+id/descr"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginTop="10dp"
                         android:text="long text" />
+
                     <TextView
                         android:id="@+id/toggleTextView"
                         android:layout_width="wrap_content"
