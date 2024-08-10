@@ -13,6 +13,12 @@
     <string name="back_button_desc">back</string>
     <string name="sign_in_button"> Sign in</string>
     <string name="sign_out">Sign Out</string>
+    <string name="name1">Mostafa Khaled</string>
+    <string name="name2">Aya Ahmed</string>
+    <string name="name3"> Farha Ghallab</string>
+    <string name="name4">  Rewan Salama</string>
+    <string name="Creator">Our Team</string>
 
+    <string name="describtion">This application provides users with an extensive database of meals, recipes, and cooking tips. Explore various categories of recipes, save your favorites, and get inspired to cook delicious meals.</string>
 
 </resources>
