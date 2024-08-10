@@ -10,43 +10,40 @@ import com.example.themeal_app.DatabaseModel.model.Meal
 import com.example.themeal_app.R
 
 class favAdapter(
-    private var recipes: List<Meal>,
     private val onDeleteClick: (Meal) -> Unit
-) : RecyclerView.Adapter<favAdapter.RecipeViewHolder>() {
+) : RecyclerView.Adapter<favAdapter.FavoriteRecipeViewHolder>() {
 
+    private var favoriteRecipes: List<Meal> = listOf()
 
-    class RecipeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val recipeTitle: TextView = view.findViewById(R.id.recipe_title)
-        val recipeDescription: TextView = view.findViewById(R.id.recipe_description)
+    class FavoriteRecipeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val recipeDescriptionTextView: TextView = view.findViewById(R.id.recipe_description)
         val deleteButton: Button = view.findViewById(R.id.delete_button)
     }
 
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteRecipeViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_favorite, parent, false)
-        return RecipeViewHolder(view)
+        return FavoriteRecipeViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
-        val recipe = recipes[position]
-        holder.recipeTitle.text = recipe.strMeal
-        holder.recipeDescription.text = recipe.strMealThumb
+    override fun onBindViewHolder(holder: FavoriteRecipeViewHolder, position: Int) {
+        val recipe = favoriteRecipes[position]
+        holder.recipeDescriptionTextView.text = recipe.strMealThumb
 
 
+           //delete
         holder.deleteButton.setOnClickListener {
             onDeleteClick(recipe)
+
         }
     }
 
-
     override fun getItemCount(): Int {
-        return recipes.size
+        return favoriteRecipes.size
     }
 
-
     fun updateRecipes(newRecipes: List<Meal>) {
-        recipes = newRecipes
+        favoriteRecipes = newRecipes
         notifyDataSetChanged()
     }
 }
