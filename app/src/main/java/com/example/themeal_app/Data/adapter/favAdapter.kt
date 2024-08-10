@@ -1,4 +1,4 @@
-package com.example.themeal_app.Data.adapter
+package com.example.themeal_app.UI.Adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,33 +6,44 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.themeal_app.DatabaseModel.model.Meal
 import com.example.themeal_app.R
 
-class favAdapter (
-    private val recipes: List<String>,
-    private val onRemoveClick: (String) -> Unit
-) : RecyclerView.Adapter< favAdapter.RecipeViewHolder>() {
+class favAdapter(
+    private val onDeleteClick: (Meal) -> Unit
+) : RecyclerView.Adapter<favAdapter.FavoriteRecipeViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_favorite, parent, false)
-        return RecipeViewHolder(view)
+    private var favoriteRecipes: List<Meal> = listOf()
+
+    class FavoriteRecipeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val recipeDescriptionTextView: TextView = view.findViewById(R.id.recipe_description)
+        val deleteButton: Button = view.findViewById(R.id.delete_button)
     }
 
-    override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
-        holder.bind(recipes[position])
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteRecipeViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_favorite, parent, false)
+        return FavoriteRecipeViewHolder(view)
     }
 
-    override fun getItemCount(): Int = recipes.size
+    override fun onBindViewHolder(holder: FavoriteRecipeViewHolder, position: Int) {
+        val recipe = favoriteRecipes[position]
+        holder.recipeDescriptionTextView.text = recipe.strMealThumb
 
-    inner class RecipeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val recipeName: TextView = itemView.findViewById(R.id.recipeName)
-        private val removeButton: Button = itemView.findViewById(R.id.removeButton)
 
-        fun bind(recipe: String) {
-            recipeName.text = recipe
-            removeButton.setOnClickListener {
-                onRemoveClick(recipe)
-            }
+           //delete
+        holder.deleteButton.setOnClickListener {
+            onDeleteClick(recipe)
+
         }
+    }
+
+    override fun getItemCount(): Int {
+        return favoriteRecipes.size
+    }
+
+    fun updateRecipes(newRecipes: List<Meal>) {
+        favoriteRecipes = newRecipes
+        notifyDataSetChanged()
     }
 }
