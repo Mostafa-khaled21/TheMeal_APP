@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.themeal_app.DatabaseModel.model.Meal
 import com.example.themeal_app.DatabaseModel.model.allData
 import com.example.viewmodel.products.Repo.mealRepository
 import kotlinx.coroutines.launch
@@ -12,7 +13,6 @@ import kotlinx.coroutines.launch
 class MVVM(private val mealRepository: mealRepository) : ViewModel() {
     private val _categoryResponse = MutableLiveData<allData>()
     val categoryResponse: LiveData<allData> = _categoryResponse
-
 
     fun getAllCategories() {
         viewModelScope.launch {
