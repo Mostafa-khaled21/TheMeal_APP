@@ -18,5 +18,6 @@ object SharedPreferencesManager {
 
     fun setLoggedIn(context: Context, isLoggedIn: Boolean) {
         getPreferences(context).edit().putBoolean(KEY_IS_LOGGED_IN, isLoggedIn).apply()
+
     }
 }

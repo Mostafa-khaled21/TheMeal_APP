@@ -16,6 +16,9 @@
             android:id="@+id/action_fav"
             android:icon="@drawable/baseline_favorite_24"
             android:title="@string/str_fav" />
-
+        <item
+            android:id="@+id/action_SignOut"
+            android:icon="@drawable/baseline_exit_to_app_24"
+            android:title="@string/sign_out" />
     </group>
 </menu>

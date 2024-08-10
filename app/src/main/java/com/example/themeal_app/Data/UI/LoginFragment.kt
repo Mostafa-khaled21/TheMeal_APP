@@ -29,7 +29,7 @@ class LoginFragment : Fragment() {
     lateinit var btn_login :Button
     lateinit var userViewModel: UserViewModel
     lateinit var txt_signup :TextView
-
+    private  val USER_NAME ="name"
 
 
     override fun onCreateView(
@@ -62,7 +62,7 @@ class LoginFragment : Fragment() {
                     if (isSuccess) {
                         SharedPreferencesManager.setLoggedIn(requireContext(), true)
 
-                        editor.putString("user_name", name)  // Save the user name
+                        editor.putString(USER_NAME, name)  // Save the user name
                         editor.apply()
 
 

@@ -10,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -33,6 +35,7 @@ class HomeFragment : Fragment() {
     private lateinit var randomImageAdapter: RandomImageAdapter
     private lateinit var viewModel: MVVM
     private lateinit var favoriteRecipeViewModel: FavoriteRecipeViewModel
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,11 +51,12 @@ class HomeFragment : Fragment() {
         // Initialize recycleviews
         recyclerView = view.findViewById(R.id.recycl)
         randomImageRecyclerView = view.findViewById(R.id.imagerecycleview)
+        navController=findNavController()
 
 
         recyclerView.layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL,false)
         //favourite Handling
-        adapter = adapter(requireContext()) { favoriteRecipe, isAdding ->
+        adapter = adapter(requireContext(),navController) { favoriteRecipe, isAdding ->
             if (isAdding) {
                 favoriteRecipeViewModel.insert(favoriteRecipe)
                 Toast.makeText(requireContext(), "${favoriteRecipe.strMeal} added to favorites!", Toast.LENGTH_SHORT).show()

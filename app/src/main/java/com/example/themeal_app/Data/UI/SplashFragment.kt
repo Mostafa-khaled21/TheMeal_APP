@@ -1,5 +1,6 @@
 package com.example.themeal_app.Data.UI
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -28,8 +29,9 @@ class SplashFragment : Fragment() {
 
         Handler(Looper.getMainLooper()).postDelayed({
             if (SharedPreferencesManager.isLoggedIn(requireContext())) {
-                findNavController().navigate(R.id.action_splashFragment2_to_homeFragment)
-            } else {
+                val intent = Intent(requireContext(), MainActivity2::class.java)
+                startActivity(intent)
+                requireActivity().finish()            } else {
                 findNavController().navigate(R.id.action_splashFragment2_to_loginFragment3)
             }
         }, 2000)

@@ -8,14 +8,18 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.themeal_app.Data.UI.HomeFragmentDirections
 import com.example.themeal_app.DatabaseModel.model.Meal
 import com.example.themeal_app.R
 import com.example.themeal_app.DatabaseModel.model.allData
 
 class adapter(
     private val context: Context,
+    val navController: NavController,
+
     private val onItemClick: (Meal, Boolean) -> Unit
 ) : RecyclerView.Adapter<adapter.MyViewHolder>() {
 
@@ -50,6 +54,7 @@ class adapter(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val category = data?.categories?.get(position) ?: return
 
+
         holder.title.text = category.strCategory
         Glide.with(context)
             .load(category.strCategoryThumb)
@@ -64,7 +69,15 @@ class adapter(
         holder.addToFavoritesButton.setOnClickListener {
             handleItemClick(category, isFavorite)
         }
+
+        holder.itemView.setOnClickListener{
+            val name_category = data?.categories?.get(position)?.strCategory
+            val action = HomeFragmentDirections.actionHomeFragmentToMealsFragment(name_category.toString())
+            navController.navigate(action)
+
+        }
     }
+
 
     private fun handleItemClick(category: Category, isFavorite: Boolean) {
         val meal = Meal(
@@ -74,4 +87,9 @@ class adapter(
         )
         onItemClick(meal, !isFavorite)
     }
+
+    private fun categoryHasMeals(categoryId: String): Boolean {
+
+        return true // Placeholder
+     }
 }

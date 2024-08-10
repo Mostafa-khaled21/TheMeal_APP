@@ -1,7 +1,9 @@
 package com.example.themeal_app.Data.UI
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
@@ -22,6 +24,8 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_main) as NavHostFragment
         navController = navHostFragment.navController
+
+
 
         // Check if the user is logged in, then navigate to MainActivity2
 //        if (isUserLoggedIn()) {

@@ -13,11 +13,11 @@
             android:id="@+id/action_homeFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_recipeDetailFragment"
-            app:destination="@id/recipeDetailFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_favoriteFragment"
             app:destination="@id/favoriteFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_mealsFragment"
+            app:destination="@id/mealsFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -48,11 +48,15 @@
             app:destination="@id/homeFragment" />
     </fragment>
     <fragment
-        android:id="@+id/splashFragment"
-        android:name="com.example.themeal_app.Data.UI.SplashFragment"
-        android:label="SplashFragment" >
+        android:id="@+id/mealsFragment"
+        android:name="com.example.themeal_app.Data.UI.mealsFragment"
+        android:label="fragment_meals"
+        tools:layout="@layout/fragment_meals" >
         <action
-            android:id="@+id/action_splashFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            android:id="@+id/action_mealsFragment_to_recipeDetailFragment"
+            app:destination="@id/recipeDetailFragment" />
+        <argument
+            android:name="category"
+            app:argType="string" />
     </fragment>
 </navigation>
