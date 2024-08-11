@@ -1,5 +1,6 @@
 package com.example.themeal_app.Data.UI
 
+import MVVM
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
@@ -14,7 +15,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.themeal_app.Data.MVVM.FavoriteRecipeViewModel
-import com.example.themeal_app.Data.MVVM.MVVM
 import com.example.themeal_app.R
 import com.example.viewmodel.network.ApiClient
 import com.example.viewmodel.products.Repo.ProductRepositoryImplementation
@@ -46,13 +46,13 @@ class SearchFragment : Fragment() {
             val query = ed_search.text.toString()
 
             if (query.isNotEmpty()) {
-                viewModel.getMealByName(query)
-                viewModel.categoryResponse.observe(viewLifecycleOwner) { searchResponse ->
+                viewModel.getMealByNameForSearch(query)
+                viewModel.mealByNameForSearch.observe(viewLifecycleOwner) { searchResponse ->
 
                     if (searchResponse != null) {
                         adapter = searchAdapter(requireContext())
                         adapter.submitData(searchResponse)
-                        Log.d("TAG1", "onCreateView:${searchResponse.meals} ")
+                        Log.d("TAG1", "onCreateView:${searchResponse} ")
                         recycel.adapter = adapter
                         adapter.notifyDataSetChanged()
                     }

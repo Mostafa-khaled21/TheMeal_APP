@@ -1,5 +1,9 @@
 package com.example.themeal_app.UI.Fragments
 
+import MVVM
+import Meal
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,12 +19,11 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.themeal_app.Data.MVVM.FavoriteRecipeViewModel
 import com.example.themeal_app.Data.MVVM.FavoriteRecipeViewModelFactory
-import com.example.themeal_app.Data.MVVM.MVVM
 import com.example.themeal_app.Data.Repo.FavoriteRecipeRepositoryImplementation
+import com.example.themeal_app.Data.UI.MainActivity2
 import com.example.themeal_app.Data.UI.mealsFragmentArgs
 import com.example.themeal_app.Data.adapter.mealsAdapter
-import com.example.themeal_app.DatabaseModel.AllDatabase.Database.FavoriteDatabase
-import com.example.themeal_app.DatabaseModel.model.Meal
+
 import com.example.themeal_app.R
 import com.example.viewmodel.network.ApiClient
 import com.example.viewmodel.products.Repo.ProductRepositoryImplementation
@@ -29,15 +32,19 @@ import com.example.viewmodel.products.viewModel.ViewModelFactory
 class RecipeDetailFragment : Fragment() {
 
     private lateinit var recipeImageView: ImageView
+    private lateinit var img_youtube: ImageView
+
     private lateinit var recipeDescriptionTextView: TextView
     private lateinit var toggleDescriptionTextView: TextView
+    private lateinit var recipetitleTextView: TextView
+
     private lateinit var favoriteButton: Button
-    private val args:   RecipeDetailFragmentArgs by navArgs()
+    private val args: RecipeDetailFragmentArgs by navArgs()
     private lateinit var viewModel: MVVM
+    private lateinit var favoriteRecipeViewModel: FavoriteRecipeViewModel
+    private lateinit var meal: Meal//
 
     private var isExpanded = false
-    private lateinit var favoriteRecipeViewModel: FavoriteRecipeViewModel
-    private lateinit var meal: Meal
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,80 +52,83 @@ class RecipeDetailFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_recipe_detail, container, false)
 
+        // Initialize Views
         recipeImageView = view.findViewById(R.id.img)
+        img_youtube = view.findViewById(R.id.img_youtube)
         recipeDescriptionTextView = view.findViewById(R.id.descr)
         toggleDescriptionTextView = view.findViewById(R.id.toggleTextView)
+        recipetitleTextView = view.findViewById(R.id.title_det)
+
         favoriteButton = view.findViewById(R.id.favoriteButton)
-        val position = args.position
+
+        // Initialize ViewModels
         getViewModel()
-        viewModel.getAllCategories()
-        viewModel.categoryResponse.observe(viewLifecycleOwner) { meals ->
-            Log.d("TAG11111", "onCreateView: meals = $meals")
-            Log.d("TAG11111", "onCreateView: mealsDetail = ${meals?.mealsDetail}")
+        initializeFavoriteViewModel()
 
-            if (meals?.mealsDetail != null && position != null) {
-                val safePosition = position.toIntOrNull()
-                Log.d("TAG11111", "onCreateView: safePosition = $safePosition")
+        // Fetch meal data
+        val mealName = args.name.toString()
+        val pos = args.position.toString()
 
-                if (safePosition != null && safePosition in meals.mealsDetail.indices) {
-                    val mealDetail = meals.mealsDetail[safePosition]
-                    recipeDescriptionTextView.text = mealDetail.strMeal
-                    Glide.with(this).load(mealDetail.strMealThumb).into(recipeImageView)
-                    meal = Meal(mealDetail.idMeal, "", mealDetail.strMealThumb)
-                } else {
-                    Log.e("RecipeDetailFragment", "Invalid position or position out of bounds")
-                    Toast.makeText(requireContext(), "Invalid position or position out of bounds", Toast.LENGTH_SHORT).show()
+        Log.d("RecipeDetailFragment", "Fetching meal with name: $mealName")
+        viewModel.getMealById(mealName)
+
+        viewModel.mealById.observe(viewLifecycleOwner) { mealResponse ->
+            mealResponse?.let {
+                val meal = it.meals.get(0)
+                recipetitleTextView.text = meal.strMeal
+                recipeDescriptionTextView.text = meal.strInstructions
+
+                Glide.with(this).load(meal.strMealThumb).into(recipeImageView)
+                val link = meal.strYoutube
+                img_youtube.setOnClickListener {
+                    if (link != null) {
+                        val uri: Uri = Uri.parse(link)
+                        val intent = Intent(Intent.ACTION_VIEW, uri)
+                        startActivity(intent)
+                    } else {
+                        Toast.makeText(requireContext(), "No YouTube link available", Toast.LENGTH_SHORT).show()
+                    }
                 }
-            } else {
-                Log.e("RecipeDetailFragment", "Meals data or mealsDetail is null or position is null")
-                Toast.makeText(requireContext(), "No meal details available", Toast.LENGTH_SHORT).show()
+            } ?: run {
+                Toast.makeText(requireContext(), "Failed to load meal details", Toast.LENGTH_SHORT).show()
             }
         }
 
-        //  ViewModel
-        val favoriteRecipeDao = FavoriteDatabase.getDatabase(requireContext()).favoriteRecipeDao()
-        val repository = FavoriteRecipeRepositoryImplementation(favoriteRecipeDao)
-        val viewModelFactory = FavoriteRecipeViewModelFactory(repository)
-        favoriteRecipeViewModel = ViewModelProvider(this, viewModelFactory).get(FavoriteRecipeViewModel::class.java)
-
-        //  Bundle
-     //   val recipeId = arguments?.getString("recipe_id") ?: ""
-     //   val recipeDescription = arguments?.getString("recipe_description") ?: "Recipe description goes here..."
-     //   val recipeImageUrl = arguments?.getString("recipe_image_url") ?: ""
-
-
-      //  recipeDescriptionTextView.text = recipeDescription
-     //   Glide.with(this).load(recipeImageUrl).into(recipeImageView)
-
-
-       // meal = Meal(recipeId, "", recipeImageUrl)
-
-        // toggle
+        // Toggle description text
         toggleDescriptionTextView.setOnClickListener {
             isExpanded = !isExpanded
-            recipeDescriptionTextView.maxLines = if (isExpanded) Integer.MAX_VALUE else 2
+            recipeDescriptionTextView.maxLines = if (isExpanded) Int.MAX_VALUE else 2
             toggleDescriptionTextView.text = if (isExpanded) "Show Less" else "Show More"
         }
 
-
+        // Handle favorite button click
         favoriteButton.setOnClickListener {
             saveRecipeToFavorites()
-
         }
 
         return view
     }
 
     private fun saveRecipeToFavorites() {
-
-        favoriteRecipeViewModel.insert(meal)
-
-        Toast.makeText(requireContext(), " Racipe added to favorites!", Toast.LENGTH_SHORT).show()
+        // Assuming `meal` is the current meal data
+        if (meal != null) {
+            favoriteRecipeViewModel.insert(meal)
+            Toast.makeText(requireContext(), "Recipe added to favorites!", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(requireContext(), "Recipe data is not available.", Toast.LENGTH_SHORT).show()
+        }
     }
-    private fun getViewModel() {
 
+
+    private fun getViewModel() {
         val apiViewModelFactory = ViewModelFactory(ProductRepositoryImplementation(ApiClient))
         viewModel = ViewModelProvider(this, apiViewModelFactory).get(MVVM::class.java)
+    }
 
+    private fun initializeFavoriteViewModel() {
+        val favoriteRecipeDao = FavoriteDatabase.getDatabase(requireContext()).favoriteRecipeDao()
+        val repository = FavoriteRecipeRepositoryImplementation(favoriteRecipeDao)
+        val viewModelFactory = FavoriteRecipeViewModelFactory(repository)
+        favoriteRecipeViewModel = ViewModelProvider(this, viewModelFactory).get(FavoriteRecipeViewModel::class.java)
     }
 }

@@ -1,13 +1,12 @@
-package com.example.themeal_app.DatabaseModel.AllDatabase.Database
 
 
-
+import Meal
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.example.themeal_app.DatabaseModel.AllDatabase.Dao.FavoriteRecipeDao
-import com.example.themeal_app.DatabaseModel.model.Meal
 
 @Database(entities = [Meal::class], version = 1)
 abstract class FavoriteDatabase : RoomDatabase() {
@@ -22,7 +21,7 @@ abstract class FavoriteDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     FavoriteDatabase::class.java,
-                    "app_database"
+                    "favorite_database"
                 ).build()
                 INSTANCE = instance
                 instance

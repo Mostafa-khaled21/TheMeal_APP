@@ -1,5 +1,6 @@
 package com.example.viewmodel.products.adapter
 
+import RandomMealResponse
 import android.content.Context
 
 import android.view.LayoutInflater
@@ -11,14 +12,12 @@ import android.widget.TextView
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.themeal_app.DatabaseModel.model.Meal
-import com.example.themeal_app.DatabaseModel.model.allData
 import com.example.themeal_app.R
 
 class searchAdapter(private val context: Context) : RecyclerView.Adapter<searchAdapter.MyViewHolder>() {
-    lateinit var allData: allData
+    lateinit var allData: RandomMealResponse
 
-    fun submitData(newAllData: allData) {
+    fun submitData(newAllData: RandomMealResponse) {
         allData = newAllData
         notifyDataSetChanged()
     }

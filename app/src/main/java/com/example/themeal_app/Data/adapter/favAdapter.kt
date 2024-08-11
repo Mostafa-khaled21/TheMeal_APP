@@ -1,12 +1,12 @@
 package com.example.themeal_app.UI.Adapters
 
+import Meal
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.themeal_app.DatabaseModel.model.Meal
 import com.example.themeal_app.R
 
 class favAdapter(

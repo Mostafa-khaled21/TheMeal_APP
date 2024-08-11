@@ -1,20 +1,24 @@
 package com.example.themeal_app.Data.adapter
 
+import Meal
+import MealsResponse
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.themeal_app.DatabaseModel.model.allData
+import com.example.themeal_app.Data.UI.HomeFragmentDirections
+import com.example.themeal_app.Data.UI.mealsFragmentDirections
 import com.example.themeal_app.R
 
-class mealsAdapter(private val context: Context) : RecyclerView.Adapter<mealsAdapter.MyViewHolder>() {
-    lateinit var allData: allData
+class mealsAdapter(private val context: Context, val navController: NavController) : RecyclerView.Adapter<mealsAdapter.MyViewHolder>() {
+    lateinit var allData: MealsResponse
 
-    fun submitData(newAllData: allData) {
+    fun submitData(newAllData: MealsResponse) {
         allData = newAllData
         notifyDataSetChanged()
     }
@@ -37,6 +41,14 @@ class mealsAdapter(private val context: Context) : RecyclerView.Adapter<mealsAda
             .load(category.strMealThumb)
             .centerCrop()
             .into(holder.img)
+        holder.itemView.setOnClickListener {
+            val position = position
+            val name = category.idMeal
+
+            val action =mealsFragmentDirections.actionMealsFragmentToRecipeDetailFragment(name,position.toString())
+            navController.navigate(action)
+
+        }
     }
 
 

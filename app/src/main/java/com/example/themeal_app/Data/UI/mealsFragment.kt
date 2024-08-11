@@ -1,5 +1,6 @@
 package com.example.themeal_app.Data.UI
 
+import MVVM
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
@@ -9,11 +10,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.themeal_app.Data.MVVM.FavoriteRecipeViewModel
-import com.example.themeal_app.Data.MVVM.MVVM
 import com.example.themeal_app.Data.adapter.mealsAdapter
 import com.example.themeal_app.R
 import com.example.viewmodel.network.ApiClient
@@ -27,6 +29,7 @@ class mealsFragment : Fragment() {
     private lateinit var favoriteRecipeViewModel: FavoriteRecipeViewModel
     private lateinit var viewModel: MVVM
     private val args: mealsFragmentArgs by navArgs()
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,14 +45,16 @@ class mealsFragment : Fragment() {
         recycel=view.findViewById(R.id.recycleviewmeasl)
         recycel.layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
         val category = args.category
+        navController=findNavController()
+
 
         getViewModel()
         viewModel.getMealsByCategory(category)
-        viewModel.categoryResponse.observe(viewLifecycleOwner) { categoryResponse ->
+        viewModel.mealsByCategory.observe(viewLifecycleOwner) { categoryResponse ->
             Log.d("TAG", "onCreateView: $categoryResponse")
 
             if (categoryResponse.meals != null && categoryResponse.meals.isNotEmpty()) {
-                adapter = mealsAdapter(requireContext())
+                adapter = mealsAdapter(requireContext(),navController)
                 adapter.submitData(categoryResponse)
                 recycel.adapter = adapter
             } else {

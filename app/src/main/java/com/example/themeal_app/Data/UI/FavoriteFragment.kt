@@ -1,5 +1,6 @@
 package com.example.themeal_app.UI.Fragments
 
+import Meal
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,9 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.themeal_app.Data.MVVM.FavoriteRecipeViewModel
 import com.example.themeal_app.Data.MVVM.FavoriteRecipeViewModelFactory
 import com.example.themeal_app.Data.Repo.FavoriteRecipeRepositoryImplementation
-import com.example.themeal_app.DatabaseModel.AllDatabase.Database.FavoriteDatabase
 import com.example.themeal_app.R
-import com.example.themeal_app.DatabaseModel.model.Meal
 import com.example.themeal_app.UI.Adapters.favAdapter
 
 class FavoriteFragment : Fragment() {

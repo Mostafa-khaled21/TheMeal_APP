@@ -1,60 +1,121 @@
-package com.example.themeal_app.Data.MVVM
-
-import android.widget.Toast
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.themeal_app.DatabaseModel.model.Meal
-import com.example.themeal_app.DatabaseModel.model.allData
 import com.example.viewmodel.products.Repo.mealRepository
 import kotlinx.coroutines.launch
 
 class MVVM(private val mealRepository: mealRepository) : ViewModel() {
-    private val _categoryResponse = MutableLiveData<allData>()
-    val categoryResponse: LiveData<allData> = _categoryResponse
+    private val _categoryResponse = MutableLiveData<CategoryResponse>()
+    val categoryResponse: LiveData<CategoryResponse> = _categoryResponse
+
+    private val _mealsByCategory = MutableLiveData<MealsResponse>()
+    val mealsByCategory: LiveData<MealsResponse> = _mealsByCategory
+
+    private val _mealByName = MutableLiveData<MealDetail>()
+    val mealByName: LiveData<MealDetail> = _mealByName
+
+    private val _randomMeal = MutableLiveData<RandomMealResponse>()
+    val randomMeal: LiveData<RandomMealResponse> = _randomMeal
+
+    private val _mealByNameForSearch = MutableLiveData<RandomMealResponse>()
+    val mealByNameForSearch: LiveData<RandomMealResponse> = _mealByNameForSearch
+
+    private val _mealById = MutableLiveData<RandomMealResponse>()
+    val mealById: LiveData<RandomMealResponse> = _mealById
 
     fun getAllCategories() {
         viewModelScope.launch {
-            val result = mealRepository.getCategoryResponse()
-            if (result.isSuccessful) {
-                _categoryResponse.value = result.body()
+            try {
+                val result = mealRepository.getCategoryResponse()
+                if (result.isSuccessful) {
+                    result.body()?.let {
+                        Log.d("MVVM", "API response body: $it")
+                        _categoryResponse.value = it
+                    } ?: run {
+                        Log.e("MVVM", "API response body is null")
+                    }
+                } else {
+                    Log.e("MVVM", "API request failed with status: ${result.code()}")
+                }
+            } catch (e: Exception) {
+                Log.e("MVVM", "Error fetching categories", e)
             }
         }
     }
 
     fun getMealsByCategory(category: String) {
         viewModelScope.launch {
-            val result = mealRepository.getMealsByCategory(category)
-            if (result.isSuccessful) {
-                _categoryResponse.value = result.body()
+            try {
+                val result = mealRepository.getMealsByCategory(category)
+                if (result.isSuccessful) {
+                    _mealsByCategory.value = result.body()
+                } else {
+                    Log.e("MVVM", "API request failed with status: ${result.code()}")
+                }
+            } catch (e: Exception) {
+                Log.e("MVVM", "Error fetching meals by category", e)
             }
         }
     }
 
     fun getMealByName(name: String) {
         viewModelScope.launch {
-            val result = mealRepository.getMealByName(name)
-            if (result.isSuccessful) {
-                _categoryResponse.value = result.body()
+            try {
+                val result = mealRepository.getMealByName(name)
+                if (result.isSuccessful) {
+                    _mealByName.value = result.body()
+                } else {
+                    Log.e("MVVM", "API request failed with status: ${result.code()}")
+                }
+            } catch (e: Exception) {
+                Log.e("MVVM", "Error fetching meal by name", e)
+            }
+        }
+    }
+
+    fun getMealByNameForSearch(name: String) {
+        viewModelScope.launch {
+            try {
+                val result = mealRepository.getMealByNameForSearch(name)
+                if (result.isSuccessful) {
+                    _mealByNameForSearch.value = result.body()
+                } else {
+                    Log.e("MVVM", "API request failed with status: ${result.code()}")
+                }
+            } catch (e: Exception) {
+                Log.e("MVVM", "Error fetching meal by name for search", e)
             }
         }
     }
 
     fun getRandomMeal() {
         viewModelScope.launch {
-            val result = mealRepository.getRandomMeal()
-            if (result.isSuccessful) {
-                _categoryResponse.value = result.body()
+            try {
+                val result = mealRepository.getRandomMeal()
+                if (result.isSuccessful) {
+                    _randomMeal.value = result.body()
+                } else {
+                    Log.e("MVVM", "API request failed with status: ${result.code()}")
+                }
+            } catch (e: Exception) {
+                Log.e("MVVM", "Error fetching random meal", e)
             }
         }
     }
 
     fun getMealById(id: String) {
         viewModelScope.launch {
-            val result = mealRepository.getMealById(id)
-            if (result.isSuccessful) {
-                _categoryResponse.value = result.body()
+            try {
+                val result = mealRepository.getMealById(id)
+                if (result.isSuccessful) {
+                    _mealById.value = result.body()
+                } else {
+                    Log.e("MVVM", "API request failed with status: ${result.code()}")
+                }
+            } catch (e: Exception) {
+                Log.e("MVVM", "Error fetching meal by id", e)
             }
         }
     }

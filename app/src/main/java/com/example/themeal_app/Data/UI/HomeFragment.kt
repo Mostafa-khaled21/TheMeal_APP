@@ -1,6 +1,7 @@
 package com.example.themeal_app.Data.UI
 
 
+import MVVM
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,10 +9,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.themeal_app.Data.MVVM.MVVM
 import com.example.themeal_app.Data.MVVM.RandomImageViewModel
 import com.example.themeal_app.Data.MVVM.RandomImageViewModelFactory
 import com.example.themeal_app.Data.Repo.RandomImageRepositoryImplementation
@@ -30,6 +32,7 @@ class HomeFragment : Fragment() {
     private lateinit var randomImageAdapter: RandomImageAdapter
     private lateinit var viewModel: MVVM
     private lateinit var randomImageViewModel: RandomImageViewModel
+    private lateinit var navController: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,9 +42,10 @@ class HomeFragment : Fragment() {
 
         recyclerView = view.findViewById(R.id.recycl)
         randomImageRecyclerView = view.findViewById(R.id.imagerecycleview)
+        navController=findNavController()
 
         recyclerView.layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
-        adapter = adapter(requireContext())
+        adapter = adapter(requireContext(),navController)
         recyclerView.adapter = adapter
 
         randomImageRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)

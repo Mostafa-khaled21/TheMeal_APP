@@ -1,10 +1,10 @@
 package com.example.themeal_app.Data.MVVM
 
+import Meal
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.themeal_app.Data.Repo.FavoriteRecipeRepository
-import com.example.themeal_app.DatabaseModel.model.Meal
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

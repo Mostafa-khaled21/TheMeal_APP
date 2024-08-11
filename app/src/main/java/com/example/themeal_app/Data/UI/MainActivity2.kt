@@ -106,6 +106,12 @@ class MainActivity2 : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                         drawer.closeDrawers()
                         return true
                     }
+                    R.id.action_about -> {
+                        navController.navigate(R.id.aboutFragment)
+
+                        drawer.closeDrawers()
+                        return true
+                    }
                 }
                 drawer.closeDrawers()
                 return false

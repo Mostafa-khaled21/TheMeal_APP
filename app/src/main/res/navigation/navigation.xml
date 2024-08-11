@@ -48,6 +48,9 @@
         android:name="com.example.themeal_app.UI.Fragments.RecipeDetailFragment"
         android:label="RecipeDetailFragment" >
         <argument
+            android:name="name"
+            app:argType="string" />
+        <argument
             android:name="position"
             app:argType="string" />
     </fragment>
@@ -62,4 +65,9 @@
             android:id="@+id/action_favoriteFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.example.themeal_app.Data.UI.AboutFragment"
+        android:label="fragment_about"
+        tools:layout="@layout/fragment_about" />
 </navigation>

@@ -1,6 +1,7 @@
 package com.example.viewmodel.products.adapter
 
 import Category
+import CategoryResponse
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -8,17 +9,17 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.themeal_app.DatabaseModel.model.Meal
+import com.example.themeal_app.Data.UI.HomeFragmentDirections
 import com.example.themeal_app.R
-import com.example.themeal_app.DatabaseModel.model.allData
 
-class adapter(private val context: Context) : RecyclerView.Adapter<adapter.MyViewHolder>() {
+class adapter(private val context: Context, val navController: NavController,) : RecyclerView.Adapter<adapter.MyViewHolder>() {
 
-    private var data: allData? = null
+    private var data: CategoryResponse? = null
 
-    fun setCategoryList(categoryList: allData) {
+    fun setCategoryList(categoryList: CategoryResponse) {
         this.data = categoryList
         notifyDataSetChanged()
     }
@@ -34,8 +35,7 @@ class adapter(private val context: Context) : RecyclerView.Adapter<adapter.MyVie
     }
 
     override fun getItemCount(): Int {
-        return data?.categories?.size ?: 0
-    }
+        return data?.categories?.size ?: 0    }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val category = data?.categories?.get(position) ?: return
@@ -45,5 +45,13 @@ class adapter(private val context: Context) : RecyclerView.Adapter<adapter.MyVie
             .load(category.strCategoryThumb)
             .centerCrop()
             .into(holder.img)
+        holder.itemView.setOnClickListener {
+            val name_category = data?.categories?.get(position)?.strCategory
+            val action =
+                HomeFragmentDirections.actionHomeFragmentToMealsFragment(name_category.toString())
+            navController.navigate(action)
+
+            }
+        }
     }
-}
+

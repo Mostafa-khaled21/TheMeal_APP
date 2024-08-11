@@ -1,5 +1,7 @@
 package com.example.themeal_app.Data.adapter
 
+import Meal
+import MealDetail
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -7,17 +9,17 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.themeal_app.DatabaseModel.model.Meal
 import com.example.themeal_app.R
 
 class RandomImageAdapter(private val context: Context) : RecyclerView.Adapter<RandomImageAdapter.ImageViewHolder>() {
 
-    private var imageList: List<Meal> = listOf()
+    private var imageList: List<MealDetail> = emptyList()
 
-    fun setImageList(images: List<Meal>?) {
-        imageList = images ?: listOf()
+    fun setImageList(meals: List<MealDetail>) {
+        imageList = meals
         notifyDataSetChanged()
     }
+
 
 
     class ImageViewHolder(val view: View) : RecyclerView.ViewHolder(view) {

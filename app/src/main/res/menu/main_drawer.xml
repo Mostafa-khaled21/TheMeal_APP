@@ -20,5 +20,9 @@
             android:id="@+id/action_SignOut"
             android:icon="@drawable/baseline_exit_to_app_24"
             android:title="@string/sign_out" />
+        <item
+            android:id="@+id/action_about"
+            android:icon="@drawable/baseline_call_24"
+            android:title="@string/about_us" />
     </group>
 </menu>
