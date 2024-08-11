@@ -6,11 +6,13 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Rect
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -26,13 +28,15 @@ class MainActivity2 : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
     private  val USER_NAME ="name"
     private lateinit var bottomNavView: BottomNavigationView
     private lateinit var navController: NavController
+
             @SuppressLint("MissingInflatedId")
             override fun onCreate(savedInstanceState: Bundle?) {
                 super.onCreate(savedInstanceState)
                 setContentView(R.layout.activity_main2) // Make sure this is the correct layout
                 sharedPreferences = this.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
                 val name = sharedPreferences.getString(USER_NAME, "default_value")
-
+                val toolbar: Toolbar = findViewById(R.id.toolbar)
+                setSupportActionBar(toolbar)
                 navView = findViewById(R.id.nav_view)
                 navView.setNavigationItemSelectedListener(this)
                 val headerView = navView.getHeaderView(0)
@@ -135,4 +139,27 @@ class MainActivity2 : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                     }
                 }
             }
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_options, menu)
+        return true
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_sign_out -> {
+                SharedPreferencesManager.setLoggedIn(this, false)
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                drawer.closeDrawers()
+                true
+            }
+            R.id.menu_about_creator -> {
+                navController.navigate(R.id.aboutFragment)
+
+                drawer.closeDrawers()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
         }
