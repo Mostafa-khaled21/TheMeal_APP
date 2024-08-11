@@ -8,6 +8,10 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context=".Data.UI.MainActivity2">
+    <include
+        layout="@layout/bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawer"
@@ -20,6 +24,7 @@
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/nav_host_fragment"
             android:layout_width="match_parent"
+            android:translationY="50dp"
             android:layout_height="match_parent"
             android:name="androidx.navigation.fragment.NavHostFragment"
             app:navGraph="@navigation/navigation"

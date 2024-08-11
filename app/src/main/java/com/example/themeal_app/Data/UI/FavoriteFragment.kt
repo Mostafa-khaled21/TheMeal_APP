@@ -11,9 +11,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.themeal_app.Data.MVVM.FavoriteRecipeViewModel
-import com.example.themeal_app.Data.MVVM.FavoriteRecipeViewModelFactory
-import com.example.themeal_app.Data.Repo.FavoriteRecipeRepositoryImplementation
 import com.example.themeal_app.R
 import com.example.themeal_app.UI.Adapters.favAdapter
 
@@ -21,7 +18,6 @@ class FavoriteFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var favoriteRecipeAdapter: favAdapter
-    private lateinit var favoriteRecipeViewModel: FavoriteRecipeViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,27 +29,18 @@ class FavoriteFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         //  ViewModel
-        val favoriteRecipeDao = FavoriteDatabase.getDatabase(requireContext()).favoriteRecipeDao()
-        val repository = FavoriteRecipeRepositoryImplementation(favoriteRecipeDao)
-        val viewModelFactory = FavoriteRecipeViewModelFactory(repository)
-        favoriteRecipeViewModel = ViewModelProvider(this, viewModelFactory).get(FavoriteRecipeViewModel::class.java)
 
         //  Adapter
         favoriteRecipeAdapter = favAdapter { meal ->
-            deleteRecipeFromFavorites(meal)
         }
         recyclerView.adapter = favoriteRecipeAdapter
 
 
-        favoriteRecipeViewModel.getAllFavoriteRecipes().observe(viewLifecycleOwner, Observer { meals ->
-            favoriteRecipeAdapter.updateRecipes(meals)
-        })
+
+
 
         return view
     }
 
-    private fun deleteRecipeFromFavorites(meal: Meal) {
-        favoriteRecipeViewModel.delete(meal)
-        Toast.makeText(requireContext(), " Racipe remove from favorites!", Toast.LENGTH_SHORT).show()
-    }
+
 }

@@ -12,9 +12,10 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.themeal_app.Data.MVVM.FavoriteRecipeViewModel
 import com.example.themeal_app.R
 import com.example.viewmodel.network.ApiClient
 import com.example.viewmodel.products.Repo.ProductRepositoryImplementation
@@ -28,6 +29,8 @@ class SearchFragment : Fragment() {
     lateinit var recycel: RecyclerView
     private lateinit var adapter: searchAdapter
     private lateinit var viewModel: MVVM
+    private lateinit var navController: NavController
+
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +43,7 @@ class SearchFragment : Fragment() {
         ed_search =view.findViewById(R.id.ed_search)
         recycel =view.findViewById(R.id.recycleviewSearch)
         recycel.layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
+        navController=findNavController()
 
         getViewModel()
         btn_search.setOnClickListener {
@@ -50,7 +54,7 @@ class SearchFragment : Fragment() {
                 viewModel.mealByNameForSearch.observe(viewLifecycleOwner) { searchResponse ->
 
                     if (searchResponse != null) {
-                        adapter = searchAdapter(requireContext())
+                        adapter = searchAdapter(requireContext(),navController)
                         adapter.submitData(searchResponse)
                         Log.d("TAG1", "onCreateView:${searchResponse} ")
                         recycel.adapter = adapter

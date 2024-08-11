@@ -15,7 +15,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.themeal_app.Data.MVVM.FavoriteRecipeViewModel
 import com.example.themeal_app.Data.adapter.mealsAdapter
 import com.example.themeal_app.R
 import com.example.viewmodel.network.ApiClient
@@ -26,7 +25,6 @@ import com.example.viewmodel.products.viewModel.ViewModelFactory
 class mealsFragment : Fragment() {
     lateinit var recycel: RecyclerView
     private lateinit var adapter: mealsAdapter
-    private lateinit var favoriteRecipeViewModel: FavoriteRecipeViewModel
     private lateinit var viewModel: MVVM
     private val args: mealsFragmentArgs by navArgs()
     private lateinit var navController: NavController

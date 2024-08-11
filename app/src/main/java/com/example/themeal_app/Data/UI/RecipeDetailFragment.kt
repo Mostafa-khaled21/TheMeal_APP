@@ -17,9 +17,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
-import com.example.themeal_app.Data.MVVM.FavoriteRecipeViewModel
-import com.example.themeal_app.Data.MVVM.FavoriteRecipeViewModelFactory
-import com.example.themeal_app.Data.Repo.FavoriteRecipeRepositoryImplementation
 import com.example.themeal_app.Data.UI.MainActivity2
 import com.example.themeal_app.Data.UI.mealsFragmentArgs
 import com.example.themeal_app.Data.adapter.mealsAdapter
@@ -41,7 +38,6 @@ class RecipeDetailFragment : Fragment() {
     private lateinit var favoriteButton: Button
     private val args: RecipeDetailFragmentArgs by navArgs()
     private lateinit var viewModel: MVVM
-    private lateinit var favoriteRecipeViewModel: FavoriteRecipeViewModel
     private lateinit var meal: Meal//
 
     private var isExpanded = false
@@ -63,7 +59,6 @@ class RecipeDetailFragment : Fragment() {
 
         // Initialize ViewModels
         getViewModel()
-        initializeFavoriteViewModel()
 
         // Fetch meal data
         val mealName = args.name.toString()
@@ -103,20 +98,9 @@ class RecipeDetailFragment : Fragment() {
 
         // Handle favorite button click
         favoriteButton.setOnClickListener {
-            saveRecipeToFavorites()
         }
 
         return view
-    }
-
-    private fun saveRecipeToFavorites() {
-        // Assuming `meal` is the current meal data
-        if (meal != null) {
-            favoriteRecipeViewModel.insert(meal)
-            Toast.makeText(requireContext(), "Recipe added to favorites!", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(requireContext(), "Recipe data is not available.", Toast.LENGTH_SHORT).show()
-        }
     }
 
 
@@ -125,10 +109,5 @@ class RecipeDetailFragment : Fragment() {
         viewModel = ViewModelProvider(this, apiViewModelFactory).get(MVVM::class.java)
     }
 
-    private fun initializeFavoriteViewModel() {
-        val favoriteRecipeDao = FavoriteDatabase.getDatabase(requireContext()).favoriteRecipeDao()
-        val repository = FavoriteRecipeRepositoryImplementation(favoriteRecipeDao)
-        val viewModelFactory = FavoriteRecipeViewModelFactory(repository)
-        favoriteRecipeViewModel = ViewModelProvider(this, viewModelFactory).get(FavoriteRecipeViewModel::class.java)
-    }
+
 }

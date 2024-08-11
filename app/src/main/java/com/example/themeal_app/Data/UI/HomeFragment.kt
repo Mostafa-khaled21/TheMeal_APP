@@ -49,7 +49,7 @@ class HomeFragment : Fragment() {
         recyclerView.adapter = adapter
 
         randomImageRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        randomImageAdapter = RandomImageAdapter(requireContext())
+        randomImageAdapter = RandomImageAdapter(requireContext(),navController)
         randomImageRecyclerView.adapter = randomImageAdapter
 
         // Initialize ViewModels

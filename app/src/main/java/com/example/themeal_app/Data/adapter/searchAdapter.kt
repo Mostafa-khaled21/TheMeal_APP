@@ -8,13 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.NavController
 
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.themeal_app.Data.UI.HomeFragmentDirections
+import com.example.themeal_app.Data.UI.SearchFragmentDirections
 import com.example.themeal_app.R
 
-class searchAdapter(private val context: Context) : RecyclerView.Adapter<searchAdapter.MyViewHolder>() {
+class searchAdapter(private val context: Context, val navController: NavController) : RecyclerView.Adapter<searchAdapter.MyViewHolder>() {
     lateinit var allData: RandomMealResponse
 
     fun submitData(newAllData: RandomMealResponse) {
@@ -40,6 +43,13 @@ class searchAdapter(private val context: Context) : RecyclerView.Adapter<searchA
             .load(category.strMealThumb)
             .centerCrop()
             .into(holder.img)
+        holder.itemView.setOnClickListener {
+            val position = position
+            val name = category.idMeal
+            val action = SearchFragmentDirections.actionSearchFragmentToRecipeDetailFragment(name,position.toString())
+            navController.navigate(action)
+
+        }
     }
 
 
