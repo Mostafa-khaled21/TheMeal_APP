@@ -6,12 +6,17 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.themeal_app.Data.UI.SearchFragmentDirections
 import com.example.themeal_app.DatabaseModel.model.Meal
 import com.example.themeal_app.R
+import com.example.themeal_app.UI.Fragments.FavoriteFragment
+import com.example.themeal_app.UI.Fragments.FavoriteFragmentDirections
 
 class favAdapter(
+     val navController: NavController,
     private val onDeleteClick: (Meal) -> Unit
 ) : RecyclerView.Adapter<favAdapter.FavoriteRecipeViewHolder>() {
 
@@ -37,6 +42,13 @@ class favAdapter(
         Glide.with(holder.itemView.context)
             .load(recipe.strMealThumb)
             .into(holder.imagemod)
+        holder.itemView.setOnClickListener {
+            val position = position
+            val name = recipe.idMeal
+            val action = FavoriteFragmentDirections.actionFavoriteFragmentToRecipeDetailFragment(name,position.toString())
+            navController.navigate(action)
+
+        }
 
         holder.deleteButton.setOnClickListener {
             onDeleteClick(recipe)

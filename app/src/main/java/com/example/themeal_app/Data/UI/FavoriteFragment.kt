@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.themeal_app.Data.MVVM.FavoriteRecipeViewModel
@@ -24,6 +26,7 @@ class FavoriteFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var favoriteRecipeAdapter: favAdapter
     private lateinit var viewModel: FavoriteRecipeViewModel
+    private lateinit var navController: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,9 +36,10 @@ class FavoriteFragment : Fragment() {
 
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
+        navController=findNavController()
 
         // Initialize the adapter with an empty list and a delete action
-        favoriteRecipeAdapter = favAdapter { meal ->
+        favoriteRecipeAdapter = favAdapter (navController){ meal ->
             // Handle delete button click
             viewLifecycleOwner.lifecycleScope.launch {
                 try {
