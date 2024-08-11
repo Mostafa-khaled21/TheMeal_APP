@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 class RandomImageViewModel(private val randomImageRepository: RandomImageRepository) : ViewModel() {
     private val _randomImageResponse = MutableLiveData<RandomMealResponse>()
     val randomImageResponse: LiveData<RandomMealResponse> = _randomImageResponse
+
     fun fetchRandomImages() {
         viewModelScope.launch {
             val result = randomImageRepository.getRandomMeal()

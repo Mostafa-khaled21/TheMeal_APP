@@ -1,4 +1,4 @@
-
+package com.example.themeal_app.DatabaseModel.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 @Entity(tableName = "favorite_recipes")

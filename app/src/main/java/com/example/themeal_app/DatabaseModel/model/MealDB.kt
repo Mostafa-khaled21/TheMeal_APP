@@ -1,4 +1,4 @@
-
+package com.example.themeal_app.DatabaseModel.AllDatabase.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 

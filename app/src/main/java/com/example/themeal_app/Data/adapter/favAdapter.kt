@@ -1,12 +1,14 @@
 package com.example.themeal_app.UI.Adapters
 
-import Meal
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.themeal_app.DatabaseModel.model.Meal
 import com.example.themeal_app.R
 
 class favAdapter(
@@ -18,6 +20,7 @@ class favAdapter(
     class FavoriteRecipeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val recipeDescriptionTextView: TextView = view.findViewById(R.id.recipe_description)
         val deleteButton: Button = view.findViewById(R.id.delete_button)
+        val imagemod: ImageView = view.findViewById(R.id.fav_img)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteRecipeViewHolder {
@@ -28,13 +31,15 @@ class favAdapter(
 
     override fun onBindViewHolder(holder: FavoriteRecipeViewHolder, position: Int) {
         val recipe = favoriteRecipes[position]
-        holder.recipeDescriptionTextView.text = recipe.strMealThumb
+        holder.recipeDescriptionTextView.text = recipe.strMeal
 
+        // Load image using Glide or another image loading library
+        Glide.with(holder.itemView.context)
+            .load(recipe.strMealThumb)
+            .into(holder.imagemod)
 
-           //delete
         holder.deleteButton.setOnClickListener {
             onDeleteClick(recipe)
-
         }
     }
 
@@ -47,3 +52,6 @@ class favAdapter(
         notifyDataSetChanged()
     }
 }
+
+
+

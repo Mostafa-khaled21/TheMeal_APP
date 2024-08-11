@@ -33,4 +33,5 @@ class ProductRepositoryImplementation(var remoteDataSource: RemoteDataSource): m
     override suspend fun getMealByNameForSearch(name: String): Response<RandomMealResponse> {
         return remoteDataSource.getMealByNameForSearch(name)
     }
+
 }

@@ -1,6 +1,6 @@
 package com.example.themeal_app.Data.adapter
 
-import Meal
+
 import MealsResponse
 import android.content.Context
 import android.view.LayoutInflater
